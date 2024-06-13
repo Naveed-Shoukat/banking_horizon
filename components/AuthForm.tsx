@@ -12,6 +12,7 @@ import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { signIn, signUp } from '@/lib/actions/user.action';
+import PlaidLink from './PlaidLink';
 
 interface AuthFormProps {
   type: string;
@@ -44,11 +45,25 @@ const AuthForm = ({ type }: AuthFormProps) => {
 
       // Sign Up Funcationality
       if (!isSignIn) {
-        const newUser = await signUp(formData);
+        const userData = {
+          email: formData.email!,
+          password: formData.password!,
+          address1: formData.address1!,
+          firstName: formData.firstName!,
+          lastName: formData.lastName!,
+          city: formData.city!,
+          state: formData.stateCode!,
+          postalCode: formData.postalCode!,
+          dateOfBirth: formData.dateOfBirth!,
+          ssn: formData.ssn!,
+        };
+
+        const newUser = await signUp(userData);
         setUser(newUser);
       }
 
       if (isSignIn) {
+
         const response = await signIn({
           email: formData.email,
           password: formData.password,
@@ -83,7 +98,9 @@ const AuthForm = ({ type }: AuthFormProps) => {
       </header>
 
       {user ? (
-        <div className='flex flex-col gap-4'>{/*Plaid Link for account */}</div>
+        <div className='flex flex-col gap-4'>
+          <PlaidLink user={user} variant='primary' />
+        </div>
       ) : (
         <React.Fragment>
           <Form {...form}>
@@ -107,7 +124,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
 
                   <CustomInput
                     control={form.control}
-                    name='address'
+                    name='address1'
                     label='Address'
                     placeholder='Enter your Address'
                   />

@@ -209,7 +209,7 @@ export const authFormSchema = (isSignIn: boolean) =>
           .string()
           .min(3, { message: 'Last NAme must be at least 3 characters.' })
           .max(25, { message: 'Last NAme must be below 26 characters.' }),
-    address: isSignIn
+    address1: isSignIn
       ? z.string().optional()
       : z
           .string()
@@ -237,14 +237,14 @@ export const authFormSchema = (isSignIn: boolean) =>
       ? z.string().optional()
       : z
           .string()
-          .min(8, { message: 'Date of Birth should be in YYYYMMDD format.' })
-          .max(8, { message: 'Date of Birth should be in YYYYMMDD format.' }),
+          .min(10, { message: 'Date of Birth should be in YYYY-MM-DD format.' })
+          .max(10, { message: 'Date of Birth should be in YYYY-MM-DD format.' }),
     ssn: isSignIn
       ? z.string().optional()
       : z
           .string()
-          .min(8, { message: 'Must be 8 Charactors.' })
-          .max(8, { message: 'Must be 8 Charactors.' }),
+          .min(4, { message: 'Must be 8 Charactors.' })
+          .max(4, { message: 'Must be 8 Charactors.' }),
     email: z.string().email(),
     password: z
       .string()
