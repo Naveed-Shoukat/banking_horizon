@@ -11,6 +11,7 @@ const TransactionHistory = async ({
 }: SearchParamProps) => {
   const currentPage = Number(page as string) || 1;
   const loggedIn = await getLoggedInUser();
+  
   const accounts = await getAccounts({
     userId: loggedIn.$id,
   });
@@ -22,7 +23,7 @@ const TransactionHistory = async ({
 
   const account = await getAccount({ appwriteItemId });
   const rowsPerPage = 10;
-  const totalPages = Math.ceil(account?.transactions.length / rowsPerPage);
+  const totalPages = Math.ceil(account?.transactions.length / rowsPerPage) | 1;
 
   const indexOfLastTransaction = currentPage * rowsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - rowsPerPage;
