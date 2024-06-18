@@ -1,13 +1,20 @@
 import HeaderBox from '@/components/HeaderBox';
+import RecentTransactions from '@/components/RecentTransactions';
 import RightSidebar from '@/components/RightSidebar';
 import TotalBalanceBox from '@/components/TotalBalanceBox';
-import { getLoggedInUser } from '@/lib/actions/user.action';
+import { getAccount, getAccounts } from '@/lib/actions/bank.actions';
+import { getLoggedInUser } from '@/lib/actions/user.actions';
 import React from 'react';
 
-const Home = async () => {
+const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
   const loggedIn = await getLoggedInUser();
-  const firstName = loggedIn?.name.split(' ')[0] || 'Guest';
+  const accounts = await getAccounts({ userId: loggedIn.$id });
+  // if (!accounts) return;
+  const accountsData = accounts?.data;
+  const firstName = loggedIn?.firstName || 'Guest';
+  const appwriteItemId = (id as string) || accountsData[0]?.appwriteItemId;
 
+  const account = await getAccount({ appwriteItemId });
   return (
     <section className='home'>
       <div className='home-content'>
@@ -19,15 +26,24 @@ const Home = async () => {
             subText='Access and manage your various accounts & transactions efficiently'
           />
           <TotalBalanceBox
-            accounts={[]}
-            totalBanks={1}
-            totalCurrentBalance={1250.35}
+            accounts={accountsData}
+            totalBanks={accounts?.totalBanks}
+            totalCurrentBalance={accounts?.totalCurrentBalance}
           />
         </header>
-        RECENT TRANSACTIONS
+        <RecentTransactions 
+          accounts={accountsData}
+          transactions = {accounts?.transactions}
+          appwriteItemId={appwriteItemId}
+          page={Number(page) | 1} 
+        />
       </div>
 
-      <RightSidebar user={loggedIn} transasctions={[]} banks={[{currentBalance: 1254.75}, {currentBalance: 7458.96}]}/>
+      <RightSidebar
+        user={loggedIn}
+        transactions={accounts?.transasctions}
+        banks={accountsData?.slice(0, 2)}
+      />
     </section>
   );
 };

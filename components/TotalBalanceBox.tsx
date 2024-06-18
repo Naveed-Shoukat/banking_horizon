@@ -16,6 +16,7 @@ const TotalBalanceBox = ({
       ? `You have 1 Bank Account linked`
       : `You don't have any account linked, please link your accounts.`;
 
+  
   return (
     <section className='total-balance'>
       <div className='total-balance-chart'>

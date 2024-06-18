@@ -16,6 +16,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import LogoLink from './LogoLink';
 import Footer from './Footer';
+import PlaidLink from './PlaidLink';
 
 const MobileNavbar = ({ user }: MobileNavbarProps) => {
   const pathname = usePathname();
@@ -70,7 +71,8 @@ const MobileNavbar = ({ user }: MobileNavbarProps) => {
                     </SheetClose>
                   );
                 })}
-                USER
+                {/* Need to fix styles for Mobile Navbar */}
+                <PlaidLink user={user} />
               </nav>
             </SheetClose>
             <Footer user={user} type='mobile' />

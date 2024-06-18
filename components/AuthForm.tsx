@@ -11,7 +11,7 @@ import { authFormSchema } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { signIn, signUp } from '@/lib/actions/user.action';
+import { signIn, signUp } from '@/lib/actions/user.actions';
 import PlaidLink from './PlaidLink';
 
 interface AuthFormProps {
@@ -63,21 +63,19 @@ const AuthForm = ({ type }: AuthFormProps) => {
       }
 
       if (isSignIn) {
-
         const response = await signIn({
           email: formData.email,
           password: formData.password,
         });
-
         if (response) router.push('/');
       }
     } catch (error) {
-      console.log(error);
+      
+      console.error('SiginIn Error Message: ',error);
     } finally {
       setIsLoading(false);
     }
 
-    console.log(formData);
     setIsLoading(false);
   };
 
