@@ -14,7 +14,6 @@ const Category = ({ category }: CategoryProps) => {
     icon,
   } = topCategoryStyles[category.name as keyof typeof topCategoryStyles] ||
   topCategoryStyles.default;
-
   return (
     <div className={cn('gap-[18px] flex p-4 rounded-xl', bg)}>
       <figure className={cn('flex-center size-10 rounded-full', circleBg)}>
@@ -28,7 +27,6 @@ const Category = ({ category }: CategoryProps) => {
         <Progress
           value={(category.count / category.totalCount) * 100}
           className={cn('h-2 w-full', progressBg)}
-          indicatorClassName={cn('h-2 w-full', indicator)}
         />
       </div>
     </div>
